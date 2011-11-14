@@ -34,7 +34,7 @@ INSTALLED_APPS = (
     'autoload',
     'dbindexer',
     "descanso",
-	'demo',
+#	'demo',
 	
 	'imagekit',
 	'addressbook',

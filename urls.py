@@ -14,8 +14,8 @@ urlpatterns += patterns('',
 
 	(r'^admin/', include(admin.site.urls)),
 	
-	(r'^api/', include('demo.api')),
-	(r'^', include('demo.urls')),
+	(r'^api/', include('main.api')),
+	(r'^', include('main.urls')),
 	
 	(r'^addressbook/', include('addressbook.urls')),
 
