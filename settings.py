@@ -37,9 +37,9 @@ INSTALLED_APPS = (
     "restbrowse",
 	'main',
 	
-	'imagekit',
+#	'imagekit',
 #	'addressbook',
-	'django.contrib.databrowse',
+#	'django.contrib.databrowse',
 
 #	'coffeescript',
 
