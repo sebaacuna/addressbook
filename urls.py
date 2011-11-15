@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
-import demo.api
 
 handler500 = 'djangotoolbox.errorviews.server_error'
 
@@ -15,9 +14,9 @@ urlpatterns += patterns('',
 	(r'^admin/', include(admin.site.urls)),
 	
 	(r'^api/', include('main.api')),
-	(r'^', include('main.urls')),
+	(r'^', include('restbrowse.urls')),
 	
-	(r'^addressbook/', include('addressbook.urls')),
+#	(r'^addressbook/', include('addressbook.urls')),
 
     #(r'^$', 'django.views.generic.simple.direct_to_template',
      #{'template': 'demo/main.html'}),

@@ -34,10 +34,11 @@ INSTALLED_APPS = (
     'autoload',
     'dbindexer',
     "descanso",
-#	'demo',
+    "restbrowse",
+	'main',
 	
 	'imagekit',
-	'addressbook',
+#	'addressbook',
 	'django.contrib.databrowse',
 
 #	'coffeescript',
