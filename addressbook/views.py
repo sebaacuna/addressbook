@@ -15,5 +15,5 @@ def upload(request, path=""):
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
         image = form.save()
-        return HttpResponse("{ id: '%s'}" % image.id)
+        return HttpResponse("{ id: '%s', 'file': '%s' }" % (image.id, image.file) )
     return HttpResponse("Something's broken")

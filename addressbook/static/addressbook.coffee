@@ -80,8 +80,9 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     console.log "Attaching file"
                     onupload = (res)=>
                         #$(".portrait input[name=id]").attr "value", res.id
-                        personview.obj.portrait = { id: res.id }
+                        personview.obj.portrait = res
                         personview.submit()
+                        showPerson personview.obj
                     args.view.elem.upload args.extra.url, onupload, "json"
                     
                 personview.bindEvent "submitted", (args)=>
