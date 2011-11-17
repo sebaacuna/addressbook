@@ -1,0 +1,154 @@
+@bigfont: 24px;
+@normalfont: 16px;
+@basegray: #efefef;
+@labelwidth: 120px;
+
+.rowHover { background: #EBF2FC; }
+
+.input_style {
+    background: transparent;
+    border: 1px solid (@basegray - #111);
+}
+
+.invisible {
+    display: none;
+}
+
+
+    
+body, td {
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+nav { 
+    font-size: @normalfont;
+    
+    li {
+        display: inline-block;
+    }
+}
+
+#leftcol {
+    width: 50%;
+    float: left;
+}
+
+#rightcol {
+    width: 50%;
+    float: right;
+}
+
+#personlist {
+    width: 90%;
+    height: 100%;
+    float:left;
+    padding: 5px;
+    
+    table.list {
+    
+        font-size: @bigfont;
+        border-collapse: collapse;
+        width: 100%;
+    
+        tbody {
+        
+            tr {
+                cursor: pointer;
+                border: 1px solid #ccc;
+                height: 34px;
+                line-height: 34px;
+                td { 
+                    padding: 5px 15px;
+                }
+            
+                td.email { color: @basegray*.75 }
+            }
+            
+            tr:hover { .rowHover }
+        }
+    }
+}
+
+#person {
+    width: 90%;
+    height: 100%;
+    float:right;
+    padding: 5px;
+    background: @basegray;
+    
+    .personaldata {
+        
+        height: 240px;
+        
+        .portrait {
+            width: 200px;
+            height: 200px;
+            border: 1px solid (@basegray*0.5);
+            padding: 2px;
+            display: inline-block;
+            float:left;
+        }
+    
+        .fields {
+            width: 420px;
+            height: 200px;
+            float: right;
+        }
+    
+        input {
+            font-size: @bigfont;
+            display: inline;
+            width: 400px;
+            margin-left: 10px;
+            .input_style;
+        }
+        
+        input:focus { background: white }
+    
+        input.email {
+            font-size: @bigfont*0.75;
+        }
+    }
+    
+    #new_entry {
+        .label { 
+            width: @labelwidth; 
+            height: 40px; 
+            display: inline-block; 
+            cursor: pointer;
+            background: @basegray*1.25;
+        }
+        
+        textarea { 
+            width: 300px; 
+            height: 40px;
+            font-size: @normalfont; 
+            .input_style;            
+        }
+        
+        textarea:focus { 
+            background: white;
+        }
+        
+    }
+}
+
+#labels {
+    position: absolute;
+    right:50px;
+    top: 50px;
+    background: white;
+    border: 1px solid #ccc;
+    width: @labelwidth;
+    
+    input {
+        .input_style;
+        width: 100%;
+    }
+    
+    table.list {
+        width: 100%;
+        tr:hover {  .rowHover }
+    }
+}
+

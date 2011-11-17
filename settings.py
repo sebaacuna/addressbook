@@ -35,13 +35,7 @@ INSTALLED_APPS = (
     'dbindexer',
     "descanso",
     "restbrowse",
-	'main',
-	
-#	'imagekit',
-#	'addressbook',
-#	'django.contrib.databrowse',
-
-#	'coffeescript',
+	'addressbook',
 
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',
