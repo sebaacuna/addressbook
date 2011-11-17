@@ -1,7 +1,7 @@
 @bigfont: 24px;
 @normalfont: 16px;
 @basegray: #efefef;
-@labelwidth: 120px;
+@labelwidth: 200px;
 
 .rowHover { background: #EBF2FC; }
 
@@ -110,13 +110,21 @@ nav {
         }
     }
     
-    #new_entry {
+    .entries {
+        
+        .entry {
+            height: 40px;
+            margin-bottom: 2px;
+        }
         .label { 
-            width: @labelwidth; 
+            width: @labelwidth;
+            padding-right: 20px; 
             height: 40px; 
             display: inline-block; 
             cursor: pointer;
             background: @basegray*1.25;
+            float:left;
+            text-align: right;
             
             
             .embedded_label {
@@ -126,14 +134,17 @@ nav {
         }
         
         textarea { 
-            width: 300px; 
+            width: 410px; 
             height: 40px;
             font-size: @normalfont; 
-            .input_style;            
+            .input_style;
+            -webkit-appearance: none;
+            border: none;
         }
         
         textarea:focus { 
             background: white;
+            -webkit-appearance: textarea;
         }
         
     }
@@ -156,6 +167,8 @@ nav {
         width: 100%;
         tr:hover {  .rowHover }
     }
+
+
 
 }
 

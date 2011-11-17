@@ -42,8 +42,8 @@
 			</div>
 		</div>
 		<div class="entries">
-			<div id="new_entry"/>
 			<div id="entrylist"/>
+			<div id="new_entry"/>
 		</div>
 	</script>
 	
@@ -51,9 +51,15 @@
 		<div class="embedded_label" view-bind-event="click:chooseLabel" bind="text"/>
 	</script>
 	
+	<script id="tmpl-container" type="text/x-jquery-tmpl">
+		<div class="items"/>
+	</script>
+	
 	<script id="tmpl-entry" type="text/x-jquery-tmpl">
-		<div xxview-bind-event="click:chooseLabel" class="label" bind="label"/>
-		<textarea view-bind-event="change:formChanged" bind="data" />
+		<div class="entry">
+			<div class="label" bind="label"/>
+			<textarea view-bind-event="change:formChanged" bind="data" />
+		</div>
 	</script>
 	
 	<script id="tmpl-label" type="text/x-jquery-tmpl">

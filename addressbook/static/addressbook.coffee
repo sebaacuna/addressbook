@@ -30,7 +30,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 personview.setTemplate "tmpl-person"
                 
                 entrylistview = new descanso.ResourceListView @resources.entry
-                entrylistview.setTemplate {view: "tmpl-table", items: "tmpl-table-row"}
+                entrylistview.setTemplate {view: "tmpl-container", items: "tmpl-entry"}
                 
                 entryview = new descanso.ResourcePaneView @resources.entry
                 entryview.setTemplate "tmpl-entry"
@@ -77,7 +77,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     args.domEvent.stopPropagation()
                     console.log "Choosing label on new entry"
                     @labelDropdownEnable args.domEvent.srcElement 
-                    labellistview.target = args.view
+                    labellistview.target = entryview
                     
                 entrylistview.bindEvent "chooseLabel", (args)=>
                     console.log "Choosing label on entrylist"
