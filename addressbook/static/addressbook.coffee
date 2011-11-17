@@ -109,7 +109,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
 
                 entryview.bindEvent "changed", (args)->
                     entryview.submit()
-                    refreshEntries()
+                    #refreshEntries()
                     
                 entryview.bindEvent "submitted", (args)=>
                     refreshEntries()
@@ -120,19 +120,6 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     refreshEntries()
                     
 
-                
-                labellistview.bindEvent "select", (args)=>
-                    console.log "Label chosen"
-                    labellistview.target.obj.label = args.view.obj
-                    labellistview.target.submit()
-                    @labelDropdownDisable()
-                    
-                labelview.bindEvent "changed", (args)=>
-                    console.log "Label form changed"
-                    labelview.submit()
-                
-                
-                
                 refreshLabels= ()=>
                     @resources.entrylabel.list (obj_list) =>
                         labellistview.bind obj_list
@@ -148,6 +135,22 @@ define ["jquery","cs!descanso"], ($, descanso) ->
 
                         $("body").bind "click", (event)=>
                             @labelDropdownDisable()
+
+                labellistview.bindEvent "select", (args)=>
+                    console.log "Label chosen"
+                    labellistview.target.obj.label = args.view.obj
+                    labellistview.target.submit()
+                    @labelDropdownDisable()
+
+                labelview.bindEvent "changed", (args)=>
+                    console.log "Label form changed"
+                    @labelDropdownDisable()
+                    labelview.submit()
+                    labellistview.target.obj.label = labelview.obj
+                    refreshLabels()
+
+
+
                             
                 refreshLabels()
 
