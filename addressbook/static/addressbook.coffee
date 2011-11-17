@@ -6,6 +6,18 @@ define ["jquery","cs!descanso"], ($, descanso) ->
             @api_url = "/api"
             @name = "addressbook"
 
+        labelDropdownEnable: (anchorElement)->
+            $("#labels").bind "click", (event)->
+                event.stopPropagation()
+            $("#labels").removeClass "invisible"
+            pos = $(anchorElement).offset()
+            $("#labels").css( { left: pos.left + "px", top: pos.top + "px" } )
+
+        labelDropdownDisable: ()->
+            $("#labels").addClass "invisible"
+            $("#labels").bind "click", ()->  # CLEAR
+            
+            
         run: ->
             @loadResources =>
                 
@@ -31,25 +43,26 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 
                 
                 # Declare event bindings
-                                
-                personlistview.bindEvent "add", (args)=>
-                    console.log "Adding person"
-                    personview.bind personview.resource.empty()
-                    @renderView "#person", personview
-                    
-                personlistview.bindEvent "select", (args)=>
-                    person = args.view.obj
-                    console.log "Selected person"
+                showPerson = (person)=>
                     personview.bind person
                     @renderView "#person", personview
-                    @resources.entry.list {"person": person }, (obj_list)=>
+                    
+                    newentry = @resources.entry.empty()
+                    newentry.person = person
+                    entryview.bind newentry
+                    @renderView "#new_entry", entryview
+                        
+                personlistview.bindEvent "select", (args)=>
+                    console.log "Selected person"
+                    showPerson args.view.obj
+                    @resources.entry.list {"person": args.view.obj }, (obj_list)=>
                         console.log "Got entries"
                         entrylistview.bind obj_list
-                        newentry = @resources.entry.empty()
-                        newentry.person = person
-                        entryview.bind newentry
                         @renderView "#entrylist", entrylistview
-                        @renderView "#new_entry", entryview
+                    
+                personlistview.bindEvent "add", (args)->
+                    console.log "Adding person"
+                    showPerson args.view.resource.empty()
 
                 personview.bindEvent "formChanged", (args)=>
                     personview.submit()
@@ -60,27 +73,27 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                         personlistview.bind obj_list
                         @renderView "#personlist", personlistview
                         
-                entrylistview.bindEvent "add", (args)=>
-                    console.log "Adding entry"
-                    
-                entryview.bindEvent "chooseLabel", (args)->
+                entryview.bindEvent "chooseLabel", (args)=>
                     args.domEvent.stopPropagation()
-                    console.log "Choosing label"
-                    $("#labels").removeClass "invisible"
-                    pos = $(args.domEvent.srcElement).offset()
-                    $("#labels").css( { left: pos.left + "px", top: pos.top + "px" } )
-                    
+                    console.log "Choosing label on new entry"
+                    @labelDropdownEnable args.domEvent.srcElement 
                     labellistview.target = args.view
+                    
+                entrylistview.bindEvent "chooseLabel", (args)=>
+                    console.log "Choosing label on entrylist"
+                    
                     
                 labellistview.bindEvent "select", (args)=>
                     console.log "Label chosen"
-                    $("#labels").elem.addClass "invisible"
-                    labellistview.target.label = args.view.obj
+                    labellistview.target.obj.label = args.view.obj
+                    entryview.submit()
+                    @labelDropdownDisable()
                     
-                    
-                labelview.bindEvent "preSubmit", (args)=>
-                    if args.view.obj.text
-                        args.view.triggerEvent "submit", ()->
+                labelview.bindEvent "formChanged", (args)=>
+                    console.log "Label form changed"
+                    labelview.submit()
+                
+                
                 
                 refreshLabels= ()=>
                     @resources.entrylabel.list (obj_list) =>
@@ -95,14 +108,10 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                             personlistview.bind obj_list
                             @renderView "#personlist", personlistview
 
-                        $("body").bind "click", (event)->
-                            console.log "Leaving label dropdown"
-                            $("#labels").addClass "invisible"
-                
+                        $("body").bind "click", (event)=>
+                            @labelDropdownDisable()
+                            
                 refreshLabels()
-                        
-                        
-                # Initial data load
-        
+
                 
     return { "App": App }

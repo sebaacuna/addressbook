@@ -48,11 +48,11 @@
 	</script>
 	
 	<script id="embed-entrylabel"  type="text/x-jquery-tmpl">
-		<div bind="text"/>
+		<div class="embedded_label" view-bind-event="click:chooseLabel" bind="text"/>
 	</script>
 	
 	<script id="tmpl-entry" type="text/x-jquery-tmpl">
-		<div view-bind-event="click:chooseLabel" class="label" bind="label"/>
+		<div xxview-bind-event="click:chooseLabel" class="label" bind="label"/>
 		<textarea view-bind-event="change:formChanged" bind="data" />
 	</script>
 	
