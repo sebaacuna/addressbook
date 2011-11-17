@@ -15,5 +15,6 @@ urlpatterns += patterns('',
 	
 	(r'^api/', include('addressbook.api')),
 	( r'^restbrowse', direct_to_template, {'template': 'browse.html'} ),
+	url(r'^upload/$', "addressbook.views.upload", name="upload"),
 	( r'^$', direct_to_template, {'template': 'addressbook.html'} ),
 )

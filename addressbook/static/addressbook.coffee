@@ -64,11 +64,20 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     console.log "Adding person"
                     showPerson args.view.resource.empty()
 
-                personview.bindEvent "changed", (args)=>
+                personview.bindEvent "formChanged", (args)=>
                     personview.submit()
+                    
+                personview.bindEvent "attach", (args)=>
+                    console.log "Attaching file"
+                    onupload = (res)=>
+                        #$(".portrait input[name=id]").attr "value", res.id
+                        personview.obj.portrait = { id: res.id }
+                        personview.submit()
+                    args.view.elem.upload args.extra.url, onupload, "json"
                     
                 personview.bindEvent "submitted", (args)=>
                     console.log "Submitted"
+                    showPerson args.view.obj
                     @resources.person.list (obj_list) =>
                         personlistview.bind obj_list
                         @renderView "#personlist", personlistview
@@ -101,7 +110,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     labellistview.target.submit()
                     @labelDropdownDisable()
                     
-                labelview.bindEvent "formChanged", (args)=>
+                labelview.bindEvent "changed", (args)=>
                     console.log "Label form changed"
                     labelview.submit()
                 

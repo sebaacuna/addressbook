@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     "descanso",
     "restbrowse",
 	'addressbook',
+	"storages",
 
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',
@@ -70,4 +71,5 @@ ROOT_URLCONF = 'urls'
 
 STATIC_URL = '/static/'
 
-
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+from aws_settings import *

@@ -2,10 +2,6 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import pre_delete
 
-
-def promo_image_name(instance, filename):
-    return "promo/image/%s" % (instance.name)
-
 # Create your models here.
 
 class Model(models.Model):
@@ -24,8 +20,7 @@ class Model(models.Model):
 
 
 class Image(Model):
-    name =          models.CharField(max_length=200)
-    file =          models.FileField(upload_to=promo_image_name, blank=True, null=True)
+    file =          models.FileField(upload_to="addressbook", blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -40,6 +35,7 @@ class Person(Model):
     lastname =       models.CharField(max_length=100, blank=True)
     secondlastname =       models.CharField(max_length=100, blank=True)
     email =         models.EmailField(blank=True)
+    portrait =      models.ForeignKey(Image, null=True)
 
     def delete_related(self):
         #self.entry_set.clear()

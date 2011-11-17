@@ -24,17 +24,19 @@
 	
 		<tr view-bind-event="click:select">
 			{{each resource.fields}}
+			{{if $value.name != "portrait"}}
 			<td class="${$value.name}" bind="${$value.name}"></td>
+			{{/if}}
 			{{/each}}
 		</tr>
 
 	</script>
 	
 	<script id="tmpl-person" type="text/x-jquery-tmpl">
-		<div class="personaldata" view-bind-event="change:formChanged" >
-			<div class="portrait" />
+		<div class="personaldata" >
+			<div class="portrait" bind="portrait" />
 		
-			<div class="fields">
+			<div view-bind-event="change:formChanged" class="fields">
 					{{each ["firstname", "middlename", "lastname", "secondlastname"] }}
 					<input class="${$value}" bind="${$value}" />
 					{{/each}}
@@ -45,6 +47,12 @@
 			<div id="entrylist"/>
 			<div id="new_entry"/>
 		</div>
+	</script>
+	
+	
+	<script id="embed-image" type="x-jquery-tmpl/html">
+		<input type="hidden" name="id" bind="id"/>
+		<input type="file" name="file" view-bind-event="change:attach url:${resource.upload_url}" />
 	</script>
 	
 	<script id="embed-entrylabel"  type="text/x-jquery-tmpl">
