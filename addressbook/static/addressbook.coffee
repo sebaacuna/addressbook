@@ -86,8 +86,9 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     
                 personview.bindEvent "submitted", (args)=>
                     console.log "Submitted"
-                    showPerson args.view.obj
+                    #showPerson args.view.obj
                     @resources.person.list (obj_list) =>
+                        console.log "Refreshing personlist"
                         personlistview.bind obj_list
                         @renderView "#personlist", personlistview
                         
@@ -108,14 +109,15 @@ define ["jquery","cs!descanso"], ($, descanso) ->
 
                 entryview.bindEvent "changed", (args)->
                     entryview.submit()
+                    refreshEntries()
                     
                 entryview.bindEvent "submitted", (args)=>
                     refreshEntries()
-
                         
                 entrylistview.bindEvent "changed", (args)->
                     console.log "Entrylist: object changed"
                     args.view.submit()
+                    refreshEntries()
                     
 
                 

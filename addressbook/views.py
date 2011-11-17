@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django import forms
 from addressbook.models import Image
 from django.template import RequestContext
-import simplejson
 
 class UploadForm(forms.ModelForm):
     class Meta:
