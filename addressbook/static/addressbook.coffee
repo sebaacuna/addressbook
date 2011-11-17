@@ -50,39 +50,59 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                         entryview.bind newentry
                         @renderView "#entrylist", entrylistview
                         @renderView "#new_entry", entryview
-                        
+
+                personview.bindEvent "formChanged", (args)=>
+                    personview.submit()
+                    
+                personview.bindEvent "submitted", (args)=>
+                    console.log "Submitted"
+                    @resources.person.list (obj_list) =>
+                        personlistview.bind obj_list
+                        @renderView "#personlist", personlistview
                         
                 entrylistview.bindEvent "add", (args)=>
                     console.log "Adding entry"
                     
-                entryview.bindEvent "chooseLabel", (args)=>
+                entryview.bindEvent "chooseLabel", (args)->
                     args.domEvent.stopPropagation()
                     console.log "Choosing label"
                     $("#labels").removeClass "invisible"
                     pos = $(args.domEvent.srcElement).offset()
                     $("#labels").css( { left: pos.left + "px", top: pos.top + "px" } )
                     
+                    labellistview.target = args.view
                     
                 labellistview.bindEvent "select", (args)=>
                     console.log "Label chosen"
                     $("#labels").elem.addClass "invisible"
+                    labellistview.target.label = args.view.obj
+                    
+                    
+                labelview.bindEvent "preSubmit", (args)=>
+                    if args.view.obj.text
+                        args.view.triggerEvent "submit", ()->
+                
+                refreshLabels= ()=>
+                    @resources.entrylabel.list (obj_list) =>
+                        labellistview.bind obj_list
+                        labelview.bind @resources.entrylabel.empty()
+
+                        console.log "Entry labels"
+                        @renderView "#labellist", labellistview
+                        @renderView "#new_label", labelview
+
+                        @resources.person.list (obj_list) =>
+                            personlistview.bind obj_list
+                            @renderView "#personlist", personlistview
+
+                        $("body").bind "click", (event)->
+                            console.log "Leaving label dropdown"
+                            $("#labels").addClass "invisible"
+                
+                refreshLabels()
+                        
                         
                 # Initial data load
-                
-                @resources.entrylabel.list (obj_list) =>
-                    labellistview.bind obj_list
-                    labelview.bind @resources.entrylabel.empty()
-                    
-                    console.log "Entry labels"
-                    @renderView "#labellist", labellistview
-                    @renderView "#new_label", labelview
-
-                    @resources.person.list (obj_list) =>
-                        personlistview.bind obj_list
-                        @renderView "#personlist", personlistview
-                        
-                    $("body").bind "click", (event)->
-                        console.log "Leaving label dropdown"
-                        $("#labels").addClass "invisible"
+        
                 
     return { "App": App }

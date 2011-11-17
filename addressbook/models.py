@@ -42,10 +42,11 @@ class Person(Model):
     email =         models.EmailField(blank=True)
 
     def delete_related(self):
-        self.entry_set.clear()
+        #self.entry_set.clear()
+        pass
 
     def __unicode__(self):
-        return "%s %s" % (self.name, self.surname)  
+        return "%s %s" % (self.firstname, self.lastname)  
 
 
 class EntryLabel(Model):

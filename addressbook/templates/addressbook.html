@@ -31,10 +31,10 @@
 	</script>
 	
 	<script id="tmpl-person" type="text/x-jquery-tmpl">
-		<div class="personaldata" view-bind-event="change:submit" >
+		<div class="personaldata" view-bind-event="change:formChanged" >
 			<div class="portrait" />
 		
-			<div view-bind-event="change:submit" class="fields">
+			<div class="fields">
 					{{each ["firstname", "middlename", "lastname", "secondlastname"] }}
 					<input class="${$value}" bind="${$value}" />
 					{{/each}}
@@ -53,11 +53,11 @@
 	
 	<script id="tmpl-entry" type="text/x-jquery-tmpl">
 		<div view-bind-event="click:chooseLabel" class="label" bind="label"/>
-		<textarea bind="data" />
+		<textarea view-bind-event="change:formChanged" bind="data" />
 	</script>
 	
 	<script id="tmpl-label" type="text/x-jquery-tmpl">
-		<div view-bind-event="change:submit" >
+		<div view-bind-event="change:formChanged" >
 			<input bind="text" />
 		</div>
 	</script>
