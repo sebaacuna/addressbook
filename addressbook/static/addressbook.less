@@ -81,12 +81,24 @@ nav {
         height: 240px;
         
         .portrait {
+            background-size: 200px;
             width: 200px;
             height: 200px;
             border: 1px solid (@basegray*0.5);
             padding: 2px;
             display: inline-block;
             float:left;
+            
+            input[type=file] {
+                display: none;
+                
+            }
+        }
+        
+        .portrait:hover {
+            input[type=file] {
+                display: block;
+            }
         }
     
         .fields {

@@ -51,8 +51,11 @@
 	
 	
 	<script id="embed-image" type="x-jquery-tmpl/html">
-		<input type="hidden" name="id" bind="id"/>
-		<input type="file" name="file" view-bind-event="change:attach url:${resource.upload_url}" />
+		<div id="personimg">
+			<input type="hidden" name="id" bind="id"/>
+			<input type="hidden" bind="file" />
+			<input type="file" name="file" view-bind-event="change:attach url:${resource.upload_url}" />
+		</div>
 	</script>
 	
 	<script id="embed-entrylabel"  type="text/x-jquery-tmpl">

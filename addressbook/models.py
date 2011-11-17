@@ -23,7 +23,7 @@ class Image(Model):
     file =          models.FileField(upload_to="addressbook", blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return self.file.url
 
     def delete(self):
         self.file.delete(save=False)

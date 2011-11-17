@@ -51,6 +51,9 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     newentry.person = person
                     entryview.bind newentry
                     @renderView "#new_entry", entryview
+                    
+                    if person.portrait.file
+                        $(".portrait").css({ 'background-image': "url('http://s3.amazonaws.com/unholster-promo/" + person.portrait.file+"')" })
                         
                 personlistview.bindEvent "select", (args)=>
                     console.log "Selected person"
@@ -98,6 +101,17 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 entryview.bindEvent "changed", (args)->
                     entryview.submit()
                     
+                entryview.bindEvent "submitted", (args)=>
+                    @resources.entry.list {"person": personview.obj.id }, (obj_list)=>
+                        console.log "Got entries"
+                        entrylistview.bind obj_list
+                        @renderView "#entrylist", entrylistview
+                        
+                        newentry = @resources.entry.empty()
+                        newentry.person = person
+                        entryview.bind newentry
+                        @renderView "#new_entry", entryview
+                        
                 entrylistview.bindEvent "changed", (args)->
                     console.log "Entrylist: object changed"
                     args.view.submit()
