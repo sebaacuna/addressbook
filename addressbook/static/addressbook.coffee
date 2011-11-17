@@ -88,14 +88,18 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                  
                         
                 entryview.bindEvent "chooseLabel", (args)=>
-                    args.domEvent.stopPropagation()
                     console.log "Choosing label on new entry"
+                    args.domEvent.stopPropagation()
                     @labelDropdownEnable args.domEvent.srcElement 
                     labellistview.target = entryview
                     
                 entrylistview.bindEvent "chooseLabel", (args)=>
                     console.log "Choosing label on entrylist"
+                    args.domEvent.stopPropagation()
+                    @labelDropdownEnable args.domEvent.srcElement 
+                    labellistview.target = args.view
                     
+                entrylistview.bindEvent "submitted", (args)=>
                 
 
                 entryview.bindEvent "changed", (args)->
