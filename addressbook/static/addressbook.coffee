@@ -43,25 +43,31 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 
                 
                 # Declare event bindings
+                
+                refreshEntries = ()=>
+                    @resources.entry.list {"person": personview.obj.id }, (obj_list)=>
+                        console.log "Got entries"
+                        entrylistview.bind obj_list
+                        @renderView "#entrylist", entrylistview
+                        
+                        newentry = @resources.entry.empty()
+                        newentry.person = personview.obj
+                        entryview.bind newentry
+                        @renderView "#new_entry", entryview
+                        
+                
                 showPerson = (person)=>
                     personview.bind person
                     @renderView "#person", personview
-                    
-                    newentry = @resources.entry.empty()
-                    newentry.person = person
-                    entryview.bind newentry
-                    @renderView "#new_entry", entryview
+                    refreshEntries()
                     
                     if person.portrait.file
                         $(".portrait").css({ 'background-image': "url('http://s3.amazonaws.com/unholster-promo/" + person.portrait.file+"')" })
+
                         
                 personlistview.bindEvent "select", (args)=>
                     console.log "Selected person"
                     showPerson args.view.obj
-                    @resources.entry.list {"person": args.view.obj.id }, (obj_list)=>
-                        console.log "Got entries"
-                        entrylistview.bind obj_list
-                        @renderView "#entrylist", entrylistview
                     
                 personlistview.bindEvent "add", (args)->
                     console.log "Adding person"
@@ -84,8 +90,6 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     @resources.person.list (obj_list) =>
                         personlistview.bind obj_list
                         @renderView "#personlist", personlistview
-                 
-                 
                         
                 entryview.bindEvent "chooseLabel", (args)=>
                     console.log "Choosing label on new entry"
@@ -100,21 +104,14 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     labellistview.target = args.view
                     
                 entrylistview.bindEvent "submitted", (args)=>
-                
+                    refreshEntries()
 
                 entryview.bindEvent "changed", (args)->
                     entryview.submit()
                     
                 entryview.bindEvent "submitted", (args)=>
-                    @resources.entry.list {"person": personview.obj.id }, (obj_list)=>
-                        console.log "Got entries"
-                        entrylistview.bind obj_list
-                        @renderView "#entrylist", entrylistview
-                        
-                        newentry = @resources.entry.empty()
-                        newentry.person = person
-                        entryview.bind newentry
-                        @renderView "#new_entry", entryview
+                    refreshEntries()
+
                         
                 entrylistview.bindEvent "changed", (args)->
                     console.log "Entrylist: object changed"
