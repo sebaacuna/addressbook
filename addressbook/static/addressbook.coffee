@@ -26,19 +26,19 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 personlistview = new descanso.ResourceListView @resources.person
                 personlistview.setTemplate {view: "tmpl-table", items: "tmpl-table-row"}
                 
-                personview = new descanso.ResourcePaneView @resources.person
+                personview = new descanso.ResourceView @resources.person
                 personview.setTemplate "tmpl-person"
                 
                 entrylistview = new descanso.ResourceListView @resources.entry
                 entrylistview.setTemplate {view: "tmpl-container", items: "tmpl-entry"}
                 
-                entryview = new descanso.ResourcePaneView @resources.entry
+                entryview = new descanso.ResourceView @resources.entry
                 entryview.setTemplate "tmpl-entry"
                 
                 labellistview = new descanso.ResourceListView @resources.entrylabel
                 labellistview.setTemplate {view: "tmpl-table", items: "tmpl-table-row"}
 
-                labelview = new descanso.ResourcePaneView @resources.entrylabel
+                labelview = new descanso.ResourceView @resources.entrylabel
                 labelview.setTemplate "tmpl-label"
                 
                 
@@ -55,7 +55,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 personlistview.bindEvent "select", (args)=>
                     console.log "Selected person"
                     showPerson args.view.obj
-                    @resources.entry.list {"person": args.view.obj }, (obj_list)=>
+                    @resources.entry.list {"person": args.view.obj.id }, (obj_list)=>
                         console.log "Got entries"
                         entrylistview.bind obj_list
                         @renderView "#entrylist", entrylistview
@@ -64,7 +64,7 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     console.log "Adding person"
                     showPerson args.view.resource.empty()
 
-                personview.bindEvent "formChanged", (args)=>
+                personview.bindEvent "changed", (args)=>
                     personview.submit()
                     
                 personview.bindEvent "submitted", (args)=>
@@ -72,6 +72,8 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                     @resources.person.list (obj_list) =>
                         personlistview.bind obj_list
                         @renderView "#personlist", personlistview
+                 
+                 
                         
                 entryview.bindEvent "chooseLabel", (args)=>
                     args.domEvent.stopPropagation()
@@ -82,11 +84,21 @@ define ["jquery","cs!descanso"], ($, descanso) ->
                 entrylistview.bindEvent "chooseLabel", (args)=>
                     console.log "Choosing label on entrylist"
                     
+                
+
+                entryview.bindEvent "changed", (args)->
+                    entryview.submit()
                     
+                entrylistview.bindEvent "changed", (args)->
+                    console.log "Entrylist: object changed"
+                    args.view.submit()
+                    
+
+                
                 labellistview.bindEvent "select", (args)=>
                     console.log "Label chosen"
                     labellistview.target.obj.label = args.view.obj
-                    entryview.submit()
+                    labellistview.target.submit()
                     @labelDropdownDisable()
                     
                 labelview.bindEvent "formChanged", (args)=>
